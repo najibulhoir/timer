@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://putraprima.id/designquote" version="3.0.0" viewmodes="maximized">
+    <access origin="https://www.tizen.org" subdomains="true"></access>
+    <access origin="https://typicode.com" subdomains="true"></access>
+    <access origin="*" subdomains="true"></access>
+    <tizen:application id="UkbIrfymjw.NewsFeed" package="UkbIrfymjw" required_version="2.2.1"/>
+    <content src="index.html"/>
+    <feature name="http://tizen.org/feature/screen.size.all"/>
+    <feature name="tizen.org/feature/network.internet"/>
+    <icon src="logo.png"/>
+    <name>Design Quote</name>
+    <tizen:privilege name="http://tizen.org/privilege/internet"/>
+    <tizen:profile name="wearable"/>
+    <tizen:setting background-support="disable" encryption="disable" hwkey-event="enable"/>
+</widget>
