@@ -1,42 +1,56 @@
-function getTimeRemaining(endtime) {
+
+// 10 minutes from now
+var time_in_minutes = 30;
+var current_time = Date.parse(new Date());
+var deadline = new Date(current_time + time_in_minutes*60*1000);
+
+
+function time_remaining(endtime){
   var t = Date.parse(endtime) - Date.parse(new Date());
-  var seconds = Math.floor((t / 1000) % 60);
-  var minutes = Math.floor((t / 1000 / 60) % 60);
-  var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-  var days = Math.floor(t / (1000 * 60 * 60 * 24));
-  return {
-    'total': t,
-    'days': days,
-    'hours': hours,
-    'minutes': minutes,
-    'seconds': seconds
-  };
+  var seconds = Math.floor( (t/1000) % 60 );
+  var minutes = Math.floor( (t/1000/60) % 60 );
+  var hours = Math.floor( (t/(1000*60*60)) % 24 );
+  var days = Math.floor( t/(1000*60*60*24) );
+  return {'total':t, 'days':days, 'hours':hours, 'minutes':minutes, 'seconds':seconds};
 }
 
-function initializeClock(id, endtime) {
+var timeinterval;
+function run_clock(id,endtime){
   var clock = document.getElementById(id);
-  //var daysSpan = clock.querySelector('.days');
-  //var hoursSpan = clock.querySelector('.hours');
-  var minutesSpan = clock.querySelector('.minutes');
-  var secondsSpan = clock.querySelector('.seconds');
-
-  function updateClock() {
-    var t = getTimeRemaining(endtime);
-
-    //daysSpan.innerHTML = t.days;
-    //hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-
-    if (t.total <= 0) {
-      clearInterval(timeinterval);
-    }
+  function update_clock(){
+    var t = time_remaining(endtime);
+    clock.innerHTML = t.minutes+':'+t.seconds;
+    if(t.total<=0){ clearInterval(timeinterval); }
   }
-
-  updateClock();
-  var timeinterval = setInterval(updateClock, 1000);
+  update_clock(); // run function once at first to avoid delay
+  timeinterval = setInterval(update_clock,1000);
 }
-var menit = 50;
-var detik = 60;
-var deadline = new Date(Date.parse(new Date()) + menit * detik * 1000);
-initializeClock('timer', deadline);
+run_clock('clockdiv',deadline);
+
+
+var paused = false; // is the clock paused?
+var time_left; // time left on the clock when paused
+
+function pause_clock(){
+  if(!paused){
+    paused = true;
+    clearInterval(timeinterval); // stop the clock
+    time_left = time_remaining(deadline).total; // preserve remaining time
+  }
+}
+
+function resume_clock(){
+  if(paused){
+    paused = false;
+
+    // update the deadline to preserve the amount of time remaining
+    deadline = new Date(Date.parse(new Date()) + time_left);
+
+    // start the clock
+    run_clock('clockdiv',deadline);
+  }
+}
+
+// handle pause and resume button clicks
+document.getElementById('pause').onclick = pause_clock;
+document.getElementById('resume').onclick = resume_clock;

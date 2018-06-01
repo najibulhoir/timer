@@ -88,13 +88,6 @@ body {
   color: #ffffff;
 }
 
-#clockdiv div > span{
-  padding: 15px;
-  border-radius: 3px;
-  background: #00816A;
-  display: inline-block;
-}
-
 .smalltext{
   padding-top: 5px;
   font-size: 16px;
@@ -107,4 +100,5 @@ body {
   text-align: center;
   font-size: 80px;
   margin-top: 170px;
+  cursor: pointer;
 }
