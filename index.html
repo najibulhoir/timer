@@ -19,14 +19,23 @@
         <div id="contents">
             <div id="area-news" class="subject">
                 <div id="timer">
-                      <div id="pause">
-
-                      <div id="clockdiv"></div>
-                    
-                      </div>
-				      <button id="resume">Resume</button>  
-            </div>
-        </div>
+                    <div id="pause">
+                    <div id="clockdiv"></div>
+                    </div>
+		            <button id="resume">Resume</button>  
+            	</div>
+            	<div id="list-timer" style="display: none;">
+            		a
+            	</div>
+            	<div id="add-timer" style="display: none;">
+            		b
+            	</div>
+        	</div>
+        	<div id="menu">
+        		<button onclick="return showHide();">Timer</button>
+				<button onclick="return showHide1();">List Timer</button>
+				<button onclick="return showHide2();">Add Timer</button>
+        	</div>
         <div id="footer">
             <div id="area-pagenum">
                 <p class="pagenum">More Quote</p>
@@ -34,43 +43,48 @@
         </div>
     </div>
     <script src="js/timer.js"></script>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.rest.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $.ajaxSetup({ cache: false });
-            $.getJSON("https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=", function (a) {
-                $("#area-news").html(a[0].content)
-            });
-            function loadNextQuote() {
-                $("#area-news").empty();
-                $("#area-news").html("Loading..");
-                $.getJSON("https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=", function (a) {
-                    $("#area-news").empty();
-                    $("#area-news").append(a[0].content)
-                });
-            }
-            document.addEventListener('tizenhwkey', function (e) {
-                if (e.keyName === "back") {
-                    try {
-                        tizen.application.getCurrentApplication().exit();
-                    } catch (ignore) { }
-                }
-            });
-            document.addEventListener("rotarydetent", function (event) {
-                if (event.detail.direction === "CW") {
-                    loadNextQuote();
-                } else if (event.detail.direction === "CCW") {
-                    loadNextQuote();
-                }
-            }, false);
-            $("#area-pagenum").click(function () {
-                loadNextQuote();
-            });
-        });
-
-    </script>
-    <!-- <script src="js/app.js"></script> -->
 </body>
-
 </html>
+<script type="text/javascript">
+	function showHide() {
+	    var ele = document.getElementById("timer");
+	    var ele1 = document.getElementById("list-timer");
+	    var ele2 = document.getElementById("add-timer");
+	    ele1.style.display = "none";
+	    ele2.style.display = "none";
+	    if(ele.style.display == "block") {
+	            ele.style.display = "none";             
+	      }
+	    else {
+	        ele.style.display = "block";            
+	    }
+	}
+
+	function showHide1() {
+	   var ele = document.getElementById("timer");
+	    var ele1 = document.getElementById("list-timer");
+	    var ele2 = document.getElementById("add-timer");
+	    ele.style.display = "none";
+	    ele2.style.display = "none";
+	    if(ele1.style.display == "block") {
+	            ele1.style.display = "none";
+	      }
+	    else {
+	        ele1.style.display = "block";
+	    }
+	}
+
+	    function showHide2() {
+	    var ele = document.getElementById("timer");
+	    var ele1 = document.getElementById("list-timer");
+	    var ele2 = document.getElementById("add-timer");
+	    ele.style.display = "none";
+	    ele1.style.display = "none";
+	    if(ele2.style.display == "block") {
+	            ele2.style.display = "none";
+	      }
+	    else {
+	        ele2.style.display = "block";
+	    }
+	}
+</script>
